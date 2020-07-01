@@ -4,19 +4,19 @@
     <hm-logo></hm-logo>
     <van-form @submit="onSubmit">
       <van-field
-        v-model="username"
+        v-model="user.username"
         label="用户名"
         placeholder="用户名"
         :rules="rules.username"
       />
       <van-field
-        v-model="nickname"
+        v-model="user.nickname"
         label="昵称"
         placeholder="昵称"
         :rules="rules.nickname"
       />
       <van-field
-        v-model="password"
+        v-model="user.password"
         type="password"
         label="密码"
         placeholder="密码"
@@ -35,13 +35,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data() {
     return {
-      username: '',
-      password: '',
-      nickname: '',
+      user: { username: '', password: '', nickname: '' },
       rules: {
         username: [
           { required: true, message: '请填写用户名和手机号' },
@@ -72,19 +69,15 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const res = await axios.post('http://localhost:3000/register', {
-        username: this.username,
-        password: this.password,
-        nickname: this.nickname
-      })
+      const res = await this.$axios.post('/register', this.user)
       const { statusCode, message } = res.data
       if (statusCode === 200) {
         this.$toast.success(message)
         this.$router.push({
           name: 'login',
           params: {
-            username: this.username,
-            password: this.password
+            username: this.user.username,
+            password: this.user.password
           }
         })
       } else {
