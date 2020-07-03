@@ -17,13 +17,14 @@
         :rules="rules.password"
       />
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">
-          提交
-        </van-button>
+        <van-button round block type="info" native-type="submit"
+          >提交</van-button
+        >
       </div>
     </van-form>
     <div class="tips">
-      如果没有账号，请点击这里 <router-link to="./register">注册</router-link>
+      如果没有账号，请点击这里
+      <router-link to="./register">注册</router-link>
     </div>
   </div>
 </template>
@@ -67,11 +68,12 @@ export default {
         password: this.password
       })
       console.log(res.data)
-      const { statusCode, message, token } = res.data
+      const { statusCode, message, data } = res.data
       if (statusCode === 200) {
         this.$toast(message)
-        localStorage.setItem('token', token)
-        this.$router.push('/')
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('userId', data.user.id)
+        this.$router.push('/user')
       }
     }
   }
