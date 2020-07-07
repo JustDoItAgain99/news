@@ -14,6 +14,12 @@ const router = new VueRouter({
     { path: '/edit', component: UserEdit, name: 'edit' }
   ]
 })
+// 解决路由重复跳转的报错虽然不影响 ， 改变原型push相当于每个push加个catch(err=>err) 意思不报错
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const pages = ['/user', '/edit']
 router.beforeEach(function(to, from, next) {
   // 路由导航卫士  三个参数 去哪 从哪来 交给别人 最后一个用next()

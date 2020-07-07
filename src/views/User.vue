@@ -35,6 +35,10 @@
         设置
         <template #content></template>
       </hm-bar>
+      <hm-bar @click="layout">
+        退出
+        <template #content></template>
+      </hm-bar>
     </div>
   </div>
 </template>
@@ -51,6 +55,21 @@ export default {
     //   // 注册事件然后提供事件处理程序 跳转编辑可以写上面
     //   this.$router.push('/edit')
     // }
+    async layout() {
+      try {
+        await this.$dialog.confirm({
+          title: '温馨提示',
+          message: '真的要退出吗？'
+        })
+
+        localStorage.removeItem('userId')
+        localStorage.removeItem('token')
+        this.$router.push('/login')
+        this.$toast.success('退出成功')
+      } catch (e) {
+        this.$toast('取消退出')
+      }
+    }
   },
   // 获取数据
   async created() {

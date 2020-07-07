@@ -1,7 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'amfe-flexible'
-import { Button, Field, Form, Toast } from 'vant'
+import {
+  Button,
+  Field,
+  Form,
+  Toast,
+  Dialog,
+  RadioGroup,
+  Radio,
+  CellGroup,
+  Cell,
+  Uploader
+} from 'vant'
 import './less/common.less'
 import './less/iconfont.less'
 import router from './router/index'
@@ -10,6 +21,7 @@ import HmLogo from './components/hm-logo.vue'
 import HmBar from './components/hm-bar.vue'
 import axios from 'axios'
 import moment from 'moment'
+
 // 把axios放到vue原型里  方便全局使用
 Vue.prototype.$axios = axios
 // axios 配置默认基地址
@@ -17,10 +29,16 @@ axios.defaults.baseURL = 'http://localhost:3000'
 // 引入vant的组件然后还有2个less 下面是使用组件和挂载路由
 Vue.config.productionTip = false
 
+Vue.use(Uploader)
+Vue.use(Cell)
+Vue.use(CellGroup)
+Vue.use(Radio)
+Vue.use(RadioGroup)
 Vue.use(Form)
 Vue.use(Button)
 Vue.use(Field)
 Vue.use(Toast)
+Vue.use(Dialog)
 
 // axios的请求拦截器
 axios.interceptors.request.use(function(config) {
